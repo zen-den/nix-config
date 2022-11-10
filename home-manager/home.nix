@@ -123,7 +123,8 @@
     };
 
     rbw.enable = true;  # bitwarden cli client TODO: self-host
-
+  };
+  
     # reduce blue light after sunset
     services.redshift = {
       enable = true;
