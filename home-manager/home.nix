@@ -122,7 +122,7 @@
         # vim-gitgutter
 
           # nix extensions
-        vim-nix
+          vim-nix
 
         # python extensions
         jedi-vim
@@ -135,16 +135,14 @@
         vim-airline
       ];
 
-      settings = {
-        expandtab = true;
-        number = true;
-        shiftwidth = 4;
-        smartcase=true;
-        tabstop = 4;
-      };
-
       extraConfig = ''
         set fileencoding=utf-8
+
+        set expandtab
+        set number
+        set shiftwidth=4
+        set smartcase
+        set tabstop=4
 
         set backspace=indent,eol,start
 
@@ -178,25 +176,19 @@
           autocmd BufEnter * :syntax sync maxlines=200
         augroup END
 
-        augroup vimrc-remember-cursor-position
-          autocmd!
-          autocmd BufReadPost* if line("'\"") > 1 && line("'\"") <=line("$") | exe "normal! g`\"" | endif
-        augroup END
-
         set autoread
       '';
-        extraPackages = with pkgs; [
-          (python3.withPackages (ps: with ps; [
-            black
-            flake8
-          ]))
-          nodejs  # required for coc
-        ];
-        extraPython3Packages = (ps: with ps; [
-          jedi
-        ]);
+      extraPackages = with pkgs; [
+        (python3.withPackages (ps: with ps; [
+          black
+          flake8
+        ]))
+        nodejs  # required for coc
+      ];
+      extraPython3Packages = (ps: with ps; [
+        jedi
+      ]);
     };
-    xdg.configFile."nvim/coc-settings.json".text = buildins.readFile ./coc-settings.json;
 
     git = {
       enable= true;
@@ -212,6 +204,7 @@
 
     rbw.enable = true;  # bitwarden cli client TODO: self-host
   };
+  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile ./coc-settings.json;
 
     # reduce blue light after sunset
     services.redshift = {
